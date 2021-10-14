@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessACore\BusUserCore.csproj" />
+    <ProjectReference Include="..\DB_TestServices\DB_TestServices.csproj" />
+    <ProjectReference Include="..\UtilitiesServices\UtilitiesServices.csproj" />
+  </ItemGroup>
+
+</Project>

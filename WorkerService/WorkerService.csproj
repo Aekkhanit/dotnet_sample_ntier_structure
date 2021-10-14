@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>dotnet-WorkerService-623A62D3-617A-4FC0-B010-87CDF5E308DB</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessAServices\BusUserServices.csproj" />
+    <ProjectReference Include="..\DB_TestServices\DB_TestServices.csproj" />
+    <ProjectReference Include="..\ServiceProviderServices\ProviderServices.csproj" />
+    <ProjectReference Include="..\UtilitiesServices\UtilitiesServices.csproj" />
+  </ItemGroup>
+</Project>
