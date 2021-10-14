@@ -1,4 +1,5 @@
 ﻿using DB_TestServices.Context_Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,8 @@ namespace DB_TestServices.GenericRepository
 {
     public interface IUserRepository
     {
-        TB_User GetUserByUsername(string username);
-        TB_User GetUserByEmail(string email);
+        Task<TB_User> GetUserByUsernameAsync(string username);
+        Task<TB_User> GetUserByEmailAsync(string email);
     }
     public class UserRepository : IUserRepository
     {
@@ -20,13 +21,13 @@ namespace DB_TestServices.GenericRepository
             this._IGenericRepository = IGenericRepository;
         }
 
-        public TB_User GetUserByEmail(string email)
+        public async Task<TB_User> GetUserByEmailAsync(string email)
         {
             //simple query data with generic class
             //error always without real connection
             try
             {
-                return this._IGenericRepository.Table.FirstOrDefault(s => s.Email == email);
+                return await this._IGenericRepository.Table.FirstOrDefaultAsync(s => s.Email == email);
 
             }
             catch (Exception ex)
@@ -34,7 +35,7 @@ namespace DB_TestServices.GenericRepository
 
                 return new TB_User()
                 {
-                    Username = "aaa",
+                    Username = "user_a",
                     Email = email,
                     First_Name = "aaa",
                     Last_Name = "bbb",
@@ -44,13 +45,13 @@ namespace DB_TestServices.GenericRepository
             }
         }
 
-        public TB_User GetUserByUsername(string username)
+        public async Task<TB_User> GetUserByUsernameAsync(string username)
         {
             //simple query data with generic class
             //error always without real connection
             try
             {
-                return this._IGenericRepository.Table.FirstOrDefault(s => s.Username == username);
+                return await this._IGenericRepository.Table.FirstOrDefaultAsync(s => s.Username == username);
             }
             catch (Exception ex)
             {

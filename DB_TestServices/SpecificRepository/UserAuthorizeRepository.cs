@@ -8,17 +8,17 @@ namespace UserService.Infrastructure.SpecificRepository
 {
     public interface IUserAuthorizeRepository
     {
-        public string[] GetTotalRolesOfUser(TB_User user);
+        public Task<string[]> GetTotalRolesOfUserAsync(TB_User user);
     }
     public class UserAuthorizeRepository : IUserAuthorizeRepository
     {
-        private readonly DB_TestContext _MyDB_Context;
-        public UserAuthorizeRepository(DB_TestContext MyDB_Context)
+        private readonly DB_TestContext _DB_TestContext;
+        public UserAuthorizeRepository(DB_TestContext DB_TestContext)
         {
-            _MyDB_Context = MyDB_Context;
+            _DB_TestContext = DB_TestContext;
         }
 
-        public string[] GetTotalRolesOfUser(TB_User user)
+        public async Task<string[]> GetTotalRolesOfUserAsync(TB_User user)
         {
             //you can code here to connect your context with many table for relation of data or some customize logic
             //eg. tb_user, tb_role, tb_permission
@@ -27,9 +27,10 @@ namespace UserService.Infrastructure.SpecificRepository
             switch (user.Type)
             {
                 case "admin":
-                    return new string[] { "admin", "super_admin" };
+                    return await Task.FromResult(new string[] { "admin", "super_admin" });
+
                 default:
-                    return new string[] { "staff" };
+                    return await Task.FromResult(new string[] { "staff" });
             }
 
         }

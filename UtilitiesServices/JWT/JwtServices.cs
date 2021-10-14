@@ -5,13 +5,15 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace UtilitiesServices.JWT
 {
 
     public interface IJwtServices
     {
-        string GenerateToken(string username);
+        Task<string> GenerateTokenAsync(string username);
+
     }
     public class JwtServices : IJwtServices
     {
@@ -22,7 +24,7 @@ namespace UtilitiesServices.JWT
             _Configuration = configuration;
         }
 
-        public string GenerateToken(string username)
+        public async Task<string> GenerateTokenAsync(string username)
         {
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_Configuration["Jwt:Key"]));
             SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -47,7 +49,7 @@ namespace UtilitiesServices.JWT
 
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return tokenHandler.WriteToken(token);
+            return await Task.FromResult(tokenHandler.WriteToken(token));
         }
 
     }

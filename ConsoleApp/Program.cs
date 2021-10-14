@@ -6,6 +6,7 @@ using ProviderServices;
 using System;
 using System.Configuration;
 using System.IO;
+using System.Threading.Tasks;
 using UtilitiesServices;
 
 namespace ConsoleApp
@@ -33,11 +34,12 @@ namespace ConsoleApp
 
             //Get service
             var _IBusAUserServices = _IServiceCollection.GetService<IBusAUserServices>();
-            var _list_user = new string[] { "aaa", "test" };
+            var _list_user = new string[] { "user_a", "user_b" };
+
             foreach (var _user in _list_user)
             {
                 Console.WriteLine(_user);
-                Console.WriteLine(_IBusAUserServices.GenerateToken(_user));
+                Console.WriteLine(_IBusAUserServices.GenerateTokenAsync(_user).Result);
                 Console.WriteLine("");
             }
         }

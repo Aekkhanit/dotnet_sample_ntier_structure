@@ -4,6 +4,7 @@ using DB_TestServices.GenericRepository;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using UserService.Infrastructure.SpecificRepository;
 using UtilitiesServices.JWT;
 
@@ -11,9 +12,9 @@ namespace BusUserServices
 {
     public interface IBusAUserServices
     {
-        public string GenerateToken(string user_or_email); 
-        public User_Model GetUserInfoByUsername(string username);
-        public User_Model GetUserInfoFromEmail(string email);
+        public Task<string> GenerateTokenAsync(string user_or_email);
+        public Task<User_Model> GetUserInfoByUsernameAsync(string username);
+        public Task<User_Model> GetUserInfoFromEmailAsync(string email);
 
     }
     public class BusAUserServices : IBusAUserServices
@@ -29,35 +30,35 @@ namespace BusUserServices
             _IJwtServices = IJwtServices;
         }
 
-        public User_Model GetUserInfoByUsername(string username)
+        public async Task<User_Model> GetUserInfoByUsernameAsync(string username)
         {
-            var _db_user = _IUserRepository.GetUserByUsername(username);
+            var _db_user = await _IUserRepository.GetUserByUsernameAsync(username);
             if (_db_user == null)
                 throw new Exception("user not found");
             else
             {
-                var _db_roles = _IUserAuthorizeRepository.GetTotalRolesOfUser(_db_user);
+                var _db_roles = await _IUserAuthorizeRepository.GetTotalRolesOfUserAsync(_db_user);
                 return _db_user.FromDataModel(_db_roles);
             }
 
         }
 
-        public User_Model GetUserInfoFromEmail(string email)
+        public async Task<User_Model> GetUserInfoFromEmailAsync(string email)
         {
-            var _db_user = _IUserRepository.GetUserByEmail(email);
+            var _db_user = await _IUserRepository.GetUserByEmailAsync(email);
             if (_db_user == null)
                 throw new Exception("user not found");
             else
             {
-                var _db_roles = _IUserAuthorizeRepository.GetTotalRolesOfUser(_db_user);
+                var _db_roles = await _IUserAuthorizeRepository.GetTotalRolesOfUserAsync(_db_user);
                 return _db_user.FromDataModel(_db_roles);
             }
         }
 
-        public string GenerateToken(string user_or_email)
+        public async Task<string> GenerateTokenAsync(string user_or_email)
         {
-            return _IJwtServices.GenerateToken(user_or_email);
+            return await _IJwtServices.GenerateTokenAsync(user_or_email);
         }
- 
+
     }
 }

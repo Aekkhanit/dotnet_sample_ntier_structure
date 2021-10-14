@@ -58,7 +58,7 @@ namespace WorkerService
                                 foreach (var _user in _list)
                                 {
                                     Console.WriteLine(_user);
-                                    Console.WriteLine(_IBusAUserServices.GenerateToken(_user));
+                                    Console.WriteLine(await _IBusAUserServices.GenerateTokenAsync(_user));
                                     Console.WriteLine("");
                                 }
                             }

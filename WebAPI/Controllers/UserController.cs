@@ -17,9 +17,9 @@ namespace WebAPI.Controllers
             _IBusAUserServices = IBusAUserServices;
         }
         [HttpGet("info/{username}")]
-        public IActionResult GetUserInfo([FromRoute] string username = "uesr_a")
+        public async Task<IActionResult> GetUserInfo([FromRoute] string username = "uesr_a")
         {
-            return Ok(_IBusAUserServices.GenerateToken(username));
+            return Ok(await _IBusAUserServices.GenerateTokenAsync(username));
         }
 
     }
